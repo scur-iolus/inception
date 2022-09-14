@@ -6,8 +6,8 @@ RUN apt-get -y update && \
 	apt-get -y install php-fpm && \
 	rm -rf /var/lib/apt/lists/*
 
-RUN useradd -gs /bin/bash -u 999 blog
+WORKDIR /var/blog/html/
 
-USER blog
+COPY ./conf/blog.conf .
 
-https://howto.wared.fr/installation-wordpress-ubuntu-nginx/
+EXPOSE 9000
