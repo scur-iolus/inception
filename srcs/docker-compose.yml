@@ -1,0 +1,119 @@
+version: "3.9"
+
+services:
+  nginx:
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+
+
+
+    ports:
+      - "5434:5432"
+    volumes:
+      - data:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready -d $$POSTGRES_DB -h $$POSTGRES_HOST -p $$POSTGRES_PORT -U $$POSTGRES_USER
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    env_file:
+      - env/db.dev.env
+  db:
+    image: postgres:14
+    ports:
+      - "5434:5432"
+    volumes:
+      - data:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready -d $$POSTGRES_DB -h $$POSTGRES_HOST -p $$POSTGRES_PORT -U $$POSTGRES_USER
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    env_file:
+      - env/db.dev.env
+  redis:
+    image: redis:latest
+    env_file:
+      - env/redis.dev.env
+  app:
+    build:
+      context: .
+      dockerfile : Dockerfile
+    command: gunicorn --config gunicorn.conf.py main.wsgi
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+    env_file:
+      - env/app.dev.env
+      - env/redis.dev.env
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  data:
+
+
+
+
+
+
+
+
+
+version: '3.8'
+services:
+    ghost:
+        image: ghost:curl
+        ports:
+            - 2368:2368
+        healthcheck:
+            test: ["CMD", "curl -f http://localhost:2368 || exit 1"]
+            timeout: 30s
+            interval: 1m
+            retries: 3
+
+
+
+
+
+
+version: '3'
+services:
+  mysql:
+    image: mariadb
+    volumes:
+      - /data/mysql:/var/lib/mysql      (Host machine : container path)
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql_root_pass
+      MYSQL_DATABASE: db_name
+      MYSQL_USER: user_name
+      MYSQL_PASSWORD: user_pass
+    restart: always
+  wordpress:
+    image: wordpress:php7.3-fpm-alpine
+    volumes:
+      - /data/html:/var/www/html
+    depends_on:
+      - mysql
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      MYSQL_ROOT_PASSWORD: mysql_root_pass
+      WORDPRESS_DB_NAME: db_name
+      WORDPRESS_DB_USER: user_name
+      WORDPRESS_DB_PASSWORD: user_pass
+      WORDPRESS_TABLE_PREFIX: wp_
+    links:
+      - mysql
+    restart: always
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - nginx:/etc/nginx/conf.d
+      - /data/html:/var/www/html
+    ports:
+      - 8080:80
+    links:
+      - wordpress
