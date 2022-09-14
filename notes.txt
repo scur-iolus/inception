@@ -2,6 +2,8 @@ https://cdn.intra.42.fr/pdf/pdf/57354/en.subject.pdf
 https://medium.com/freestoneinfotech/simplifying-docker-compose-operations-using-makefile-26d451456d63
 https://mariadb.com/kb/en/creating-a-custom-docker-image/
 https://medium.com/swlh/wordpress-deployment-with-nginx-php-fpm-and-mariadb-using-docker-compose-55f59e5c1a
+https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-docker-compose
+
 
 $ docker build .
 $ docker run -d -p 80:80

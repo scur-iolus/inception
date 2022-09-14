@@ -113,7 +113,13 @@ services:
     volumes:
       - nginx:/etc/nginx/conf.d
       - /data/html:/var/www/html
+      OU
+      - ./nginx:/etc/nginx/conf.d
+      - ./logs/nginx:/var/log/nginx
+      - ./wordpress:/var/www/html
     ports:
       - 8080:80
     links:
       - wordpress
+    restart: always
+s
