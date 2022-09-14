@@ -1,0 +1,5 @@
+notes.txt
+srcs/.env
+.vscode
+*.swp
+.DS_Store
