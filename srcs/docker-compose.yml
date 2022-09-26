@@ -10,10 +10,10 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-default_root_pwd}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-wordpress_db}
+      - MYSQL_USER=${MYSQL_USER:-wordpress_usr}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-default_password}
     networks:
       - docker-network
   wordpress: # container that contains WordPress + php-fpm
@@ -25,10 +25,10 @@ services:
     volumes:
       - wordpress_data:/var/www/html
     environment:
-      - MYSQL_HOST=${MYSQL_HOST}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_HOST=${MYSQL_HOST:-mariadb}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-wordpress_db}
+      - MYSQL_USER=${MYSQL_USER:-wordpress_usr}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-default_password}
     depends_on:
       - db
     links:
