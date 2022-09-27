@@ -10,10 +10,10 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-default_root_pwd}
-      - MYSQL_DATABASE=${MYSQL_DATABASE:-wordpress_db}
-      - MYSQL_USER=${MYSQL_USER:-wordpress_usr}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-default_password}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD is not set}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:?MYSQL_DATABASE is not set}
+      - MYSQL_USER=${MYSQL_USER:?MYSQL_USER is not set}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:?MYSQL_PASSWORD is not set}
     networks:
       - docker-network
   wordpress: # container that contains WordPress + php-fpm
@@ -25,10 +25,10 @@ services:
     volumes:
       - wordpress_data:/var/www/html
     environment:
-      - MYSQL_HOST=${MYSQL_HOST:-mariadb}
-      - MYSQL_DATABASE=${MYSQL_DATABASE:-wordpress_db}
-      - MYSQL_USER=${MYSQL_USER:-wordpress_usr}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-default_password}
+      - MYSQL_HOST=${MYSQL_HOST:?MYSQL_HOST is not set}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:?MYSQL_DATABASE is not set}
+      - MYSQL_USER=${MYSQL_USER:?MYSQL_USER is not set}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:?MYSQL_PASSWORD is not set}
     depends_on:
       - db
     links:
@@ -54,11 +54,17 @@ services:
 
 volumes:
   db_data: # volume that contains the WordPress database
+    driver: local # default driver
     driver_opts:
-      device: '/home/llalba/data'
+      device: "/home/moi/42/inception/srcs/test" # /home/llalba/data FIXME
+      type: none # default, no physical disk partition linked to the mound point
+      o: bind # custom mount options
   wordpress_data: # 2d volume that contains the WordPress website files
+    driver: local
     driver_opts:
-      device: '/home/llalba/data'
+      device: "/home/moi/42/inception/srcs/test" # /home/llalba/data FIXME
+      type: none
+      o: bind
 
 networks:
   docker-network: # establishes the connection between the containers

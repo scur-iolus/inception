@@ -3,3 +3,4 @@ srcs/.env
 .vscode
 *.swp
 .DS_Store
+srcs/test
