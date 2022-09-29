@@ -29,3 +29,13 @@ infrastructure via the port 443.
 https://mariadb.com/kb/en/creating-a-custom-docker-image/
 https://medium.com/swlh/wordpress-deployment-with-nginx-php-fpm-and-mariadb-using-docker-compose-55f59e5c1a
 https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-docker-compose
+
+NGINX
+https://nginx.org/en/docs/beginners_guide.html
+https://www.digitalocean.com/community/tutorials/understanding-the-nginx-configuration-file-structure-and-configuration-contexts
+https://www.digitalocean.com/community/tutorials/understanding-and-implementing-fastcgi-proxying-in-nginx
+https://cheapsslsecurity.com/p/everything-you-need-to-know-about-an-ssl-cipher-cipher-lists/
+
+Moins utiles :
+https://blog.martinfjordvald.com/nginx-config-history-fastcgi_params-versus-fastcgi-conf/
+https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms#introduction
