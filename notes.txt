@@ -39,3 +39,5 @@ https://cheapsslsecurity.com/p/everything-you-need-to-know-about-an-ssl-cipher-c
 Moins utiles :
 https://blog.martinfjordvald.com/nginx-config-history-fastcgi_params-versus-fastcgi-conf/
 https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms#introduction
+
+installer l'extension pour VS code
