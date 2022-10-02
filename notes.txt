@@ -41,3 +41,10 @@ https://blog.martinfjordvald.com/nginx-config-history-fastcgi_params-versus-fast
 https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms#introduction
 
 installer l'extension pour VS code
+
+https://howto.wared.fr/installation-wordpress-ubuntu-nginx/
+https://github.com/10up/WordPress-Server-Configs/blob/master/php-fpm/www.conf
+https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-lemp-nginx-mariadb-and-php-on-debian-10
+https://codex.wordpress.org/fr:Modifier_wp-config.php
+
+Install a LEMP stack

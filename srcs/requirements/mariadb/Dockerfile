@@ -16,12 +16,12 @@ EXPOSE 3306/tcp
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
 	CMD mariadb -e 'SELECT @@datadir;' || exit 1
 
-COPY ./utils/db_setup.sh .
+COPY ./utils/setup.sh .
 COPY ./utils/queries.sql .
 
-RUN chmod +r ./queries.sql && chmod +x ./db_setup.sh
+RUN chmod +r ./queries.sql && chmod +x ./setup.sh
 
-ENTRYPOINT ["./db_setup.sh"]
+ENTRYPOINT ["./setup.sh"]
 
 # changes the bind-address to 'all' instead of 127.0.0.1 only,
 # allowing the MariaDB server to listen on all IPv4 addresses

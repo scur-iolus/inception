@@ -22,17 +22,19 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
-    volumes: # FIXME
-      - wordpress_data:/var/www/html
+    # volumes: # FIXME
+    #   - wordpress_data:/var/www/html
+    ports: # FIXME
+      - 80:9000
     environment:
       - MYSQL_HOST=${MYSQL_HOST:?MYSQL_HOST is not set}
       - MYSQL_DATABASE=${MYSQL_DATABASE:?MYSQL_DATABASE is not set}
       - MYSQL_USER=${MYSQL_USER:?MYSQL_USER is not set}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:?MYSQL_PASSWORD is not set}
-    depends_on:
-      - db
-    links:
-      - db
+    # depends_on:
+    #   - db
+    # links:
+    #   - db
     networks:
       - docker-network
   nginx: # container that contains NGINX with TLSv1.2 or TLSv1.3 only
