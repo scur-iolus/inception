@@ -30,4 +30,4 @@ RUN chmod +x ./setup.sh
 
 EXPOSE 9000
 
-ENTRYPOINT ["/bin/bash", "./setup.sh"]
+ENTRYPOINT ["sh", "./setup.sh"]

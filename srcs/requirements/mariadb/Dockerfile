@@ -5,7 +5,7 @@ ARG DEBIAN_FRONTEND=teletype
 
 RUN apt-get -y update &&\
 	apt-get install -y mariadb-server-10.3 &&\
-	apt-get install -y mlocate &&\
+	apt-get install -y vim &&\
 	rm -rf /var/lib/apt/lists/* &&\
 	# makes MariaDB service directory
 	mkdir -p /var/run/mysqld &&\
@@ -25,4 +25,4 @@ COPY ./utils/queries.sql .
 
 RUN chmod +r ./queries.sql && chmod +x ./setup.sh
 
-ENTRYPOINT ["./setup.sh"]
+ENTRYPOINT [ "sh", "./setup.sh" ]

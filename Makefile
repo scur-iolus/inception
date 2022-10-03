@@ -6,7 +6,7 @@
 #    By: llalba <llalba@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/14 11:02:31 by llalba            #+#    #+#              #
-#    Updated: 2022/10/03 10:46:25 by llalba           ###   ########.fr        #
+#    Updated: 2022/10/03 17:19:49 by llalba           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ start:			# Starts all or c=<name> containers in background
 				$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) up --build -d $(c)
 
 stop:			# Stops all or c=<name> containers
-				@$(call green,"⏸ Stops running containers without removing them")
+				@$(call green,"🛑 Stops running containers without removing them")
 				$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) stop $(c)
 
 restart:		# Restarts all or c=<name> containers

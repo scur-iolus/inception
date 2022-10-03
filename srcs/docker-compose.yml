@@ -46,6 +46,8 @@ services:
       - 80:80 # FIXME
     volumes:
       - wordpress_data:/var/www/html/wordpress
+    depends_on:
+      - wordpress
     links:
       - wordpress
     networks:
