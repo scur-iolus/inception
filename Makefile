@@ -6,7 +6,7 @@
 #    By: llalba <llalba@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/14 11:02:31 by llalba            #+#    #+#              #
-#    Updated: 2022/09/26 15:51:36 by llalba           ###   ########.fr        #
+#    Updated: 2022/10/03 10:46:25 by llalba           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ green			= /bin/echo -e "\x1b[1m\x1b[32m$1\x1b[0m"
 ,				:= ,
 
 DOCKER_COMPOSE	= docker-compose
-COMPOSE_FILE	= ./srcs/docker-compose-copy.yml
+COMPOSE_FILE	= ./srcs/docker-compose.yml
 
 all:			up # the 1st target is the default target: here 'up' isn't a command, it's a prerequisite
 

@@ -1,14 +1,18 @@
 FROM debian:buster
 
+# to avoid debian harmless warnings
+ARG DEBIAN_FRONTEND=teletype
+
 RUN apt-get -y update &&\
 	apt-get install -y mariadb-server-10.3 &&\
+	apt-get install -y mlocate &&\
 	rm -rf /var/lib/apt/lists/* &&\
 	# makes MariaDB service directory
 	mkdir -p /var/run/mysqld &&\
 	# gives mysql user permission to write to the service directory
 	chown -R mysql:mysql /var/run/mysqld &&\
-	# changes the permissions to rwx for everyone
-	chmod 755 /var/run/mysqld
+	# changes the permissions to rwx for all users
+	chmod 777 /var/run/mysqld
 
 # default port of both MySQL and MariaDB
 EXPOSE 3306/tcp
@@ -25,4 +29,4 @@ ENTRYPOINT ["./setup.sh"]
 
 # changes the bind-address to 'all' instead of 127.0.0.1 only,
 # allowing the MariaDB server to listen on all IPv4 addresses
-CMD ["mysqld", "--bind-address=0.0.0.0"]
+CMD ["mysqld", "--bind-address=0.0.0.0", "--verbose"]

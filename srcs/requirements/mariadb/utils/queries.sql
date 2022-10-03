@@ -10,7 +10,7 @@ DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.
 
 -- An invalid password is initially set for root
 UPDATE mysql.user SET Password=PASSWORD('$esc_pass_root') WHERE User='root';
-CREATE IF NOT EXISTS USER '$MYSQL_USER'@'%' IDENTIFIED BY '$esc_pass_usr';
+CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$esc_pass_usr';
 
 -- Creates and prepares the Wordpress database
 CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;
@@ -21,4 +21,4 @@ GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';
 -- all changes made so far will take effect immediately
 FLUSH PRIVILEGES;
 
-exit;
+exit

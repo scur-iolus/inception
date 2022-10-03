@@ -7,8 +7,8 @@ services:
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
-    # volumes: # FIXME
-    #   - db_data:/var/lib/mysql
+    volumes:
+      - db_data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD is not set}
       - MYSQL_DATABASE=${MYSQL_DATABASE:?MYSQL_DATABASE is not set}
@@ -22,19 +22,17 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
-    # volumes: # FIXME
-    #   - wordpress_data:/var/www/html
-    ports: # FIXME
-      - 80:9000
+    volumes:
+      - wordpress_data:/var/www/html/wordpress
     environment:
       - MYSQL_HOST=${MYSQL_HOST:?MYSQL_HOST is not set}
       - MYSQL_DATABASE=${MYSQL_DATABASE:?MYSQL_DATABASE is not set}
       - MYSQL_USER=${MYSQL_USER:?MYSQL_USER is not set}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:?MYSQL_PASSWORD is not set}
-    # depends_on:
-    #   - db
-    # links:
-    #   - db
+    depends_on:
+      - db
+    links:
+      - db
     networks:
       - docker-network
   nginx: # container that contains NGINX with TLSv1.2 or TLSv1.3 only
@@ -47,9 +45,9 @@ services:
       - 443:443
       - 80:80 # FIXME
     volumes:
-      - wordpress_data:/var/www/html
-    # links: # FIXME
-    #   - wordpress
+      - wordpress_data:/var/www/html/wordpress
+    links:
+      - wordpress
     networks:
       - docker-network
 
@@ -58,13 +56,13 @@ volumes:
   db_data: # volume that contains the WordPress database
     driver: local # default driver
     driver_opts:
-      device: "/home/moi/42/inception/srcs/test" # /home/llalba/data/db FIXME
+      device: "/home/moi/42/inception/srcs/test/db" # /home/llalba/data/db FIXME
       type: none # default, no physical disk partition linked to the mound point
       o: bind # custom mount options
-  wordpress_data: # 2d volume that contains the WordPress website files
+  wordpress_data: # 2d volume that contains the WordPress files
     driver: local
     driver_opts:
-      device: "/home/moi/42/inception/srcs/test" # /home/llalba/data/website FIXME
+      device: "/home/moi/42/inception/srcs/test/wordpress" # /home/llalba/data/wordpress FIXME
       type: none
       o: bind
 

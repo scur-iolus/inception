@@ -1,5 +1,8 @@
 FROM debian:buster
 
+# to avoid debian harmless warnings
+ARG DEBIAN_FRONTEND=teletype
+
 # cleaning up the apt cache after upgrade to keep the image size down
 RUN apt-get -y update &&\
 	apt-get -y install nginx &&\
@@ -29,7 +32,7 @@ RUN rm -rf /var/log/nginx &&\
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
-# EXPOSE 443/tcp # FIXME
+# EXPOSE 443 # FIXME
 
 # The option prevents the container from halting
 # since Docker is only watching the PID of the original command
