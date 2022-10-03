@@ -26,7 +26,3 @@ COPY ./utils/queries.sql .
 RUN chmod +r ./queries.sql && chmod +x ./setup.sh
 
 ENTRYPOINT ["./setup.sh"]
-
-# changes the bind-address to 'all' instead of 127.0.0.1 only,
-# allowing the MariaDB server to listen on all IPv4 addresses
-CMD ["mysqld", "--bind-address=0.0.0.0", "--verbose"]
