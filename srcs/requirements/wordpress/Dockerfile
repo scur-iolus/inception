@@ -20,9 +20,9 @@ RUN curl -s -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-
 	mkdir -p /run/php &&\
 	mkdir -p /var/www/html
 
-COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/
+COPY ./utils/www.conf /etc/php/7.3/fpm/pool.d/
 
-COPY ./conf/setup.sh /var/www/html
+COPY ./utils/setup.sh /var/www/html/wp_setup.sh
 
 # creates a new user, owner of all useful files
 RUN groupadd wordpress &&\
@@ -43,7 +43,7 @@ RUN chmod o-rwx -R /run/php && \
 	chmod o-rwx /usr/local/bin/wp &&\
 	chmod u+x /usr/local/bin/wp &&\
 	chmod u+r -R /etc/php/7.3/fpm/pool.d &&\
-	chmod u+x /var/www/html/setup.sh
+	chmod u+x /var/www/html/wp_setup.sh
 
 WORKDIR /var/www/html
 
@@ -51,4 +51,4 @@ USER wordpress
 
 EXPOSE 9000
 
-ENTRYPOINT ["sh", "./setup.sh"]
+ENTRYPOINT ["sh", "./wp_setup.sh"]

@@ -51,10 +51,11 @@ services:
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME:?DOMAIN_NAME is not set}
+      - ADMIN_NAME=${ADMIN_NAME:?ADMIN_NAME is not set}
     ports:
       - 443:443
-      - 80:80
-    # FIXME
     volumes:
       - wordpress_data:/var/www/html/
     depends_on:
@@ -69,13 +70,13 @@ volumes:
   db_data: # volume that contains the WordPress database
     driver: local # default driver
     driver_opts:
-      device: "/home/moi/42/inception/srcs/test/db" # /home/llalba/data/db FIXME
+      device: "/home/moi/42/inception/srcs/test/db" # /home/$ADMIN_NAME/data/db FIXME
       type: none # default, no physical disk partition linked to the mound point
       o: bind # custom mount options
   wordpress_data: # 2d volume that contains the WordPress files
     driver: local
     driver_opts:
-      device: "/home/moi/42/inception/srcs/test/wordpress" # /home/llalba/data/wordpress FIXME
+      device: "/home/moi/42/inception/srcs/test/wordpress" # /home/$ADMIN_NAME/data/wordpress FIXME
       type: none
       o: bind
 
