@@ -22,7 +22,7 @@ else
 		if [ $? -eq 0 ]; then
 			break
 		fi
-		echo "⏳ Waiting for mariadb to be ready...\n" && sleep 2
+		echo "⏳ Waiting for mariadb to be ready...\n" && sleep 3
 	done
 	# wp rewrite structure '/%postname%/' --hard
 	# wp rewrite flush --hard

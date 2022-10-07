@@ -1,36 +1,13 @@
 TODO
-Read about PID 1 and the best practices for writing Dockerfiles.
-nginx.conf
-healthcheck pour mariadb
-variables d'environnement à définir
+🔴 root vs non root : lancer mariadb en non root
+It should not be possible to log in as root to the DB without any password
 
-
-🔴 Tester makefile
-🔴 "Wordpress already here"
-🔴 make up un container seulement ?
-🔴 root vs non root
-
-
-
-In your WordPress database, there must be two users, one of them being the ad-
-ministrator. The administrator’s username can’t contain admin/Admin or admin-
-istrator/Administrator (e.g., admin, administrator, Administrator, admin-123, and
-so forth).
 
 To make things simpler, you have to configure your domain name so it points to your
 local IP address.
 This domain name must be login.42.fr. Again, you have to use your own login.
 For example, if your login is wil, wil.42.fr will redirect to the IP address pointing to
 wil’s website.
-
-The 'latest' tag is prohibited.
-No password must be present in your Dockerfiles.
-It is mandatory to use environment variables.
-Also, it is strongly recommended to use a .env file to store
-environment variables. The .env file should be located at the root
-of the srcs directory.
-Your NGINX container must be the only entrypoint into your
-infrastructure via the port 443.
 
 
 https://mariadb.com/kb/en/creating-a-custom-docker-image/
@@ -62,3 +39,8 @@ https://stackoverflow.com/questions/21553353/what-is-the-difference-between-cmd-
 https://mariadb.com/kb/en/mysqld-options/
 
 https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-with-http-2-support-on-ubuntu-18-04
+
+
+https://github.com/kema-dev/inception
+https://github.com/raccoman/inception
+https://github.com/codesshaman/inception

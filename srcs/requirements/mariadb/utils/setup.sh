@@ -13,7 +13,7 @@ else
 
 	until [ -d "/var/lib/mysql/test" ]
 	do
-		echo "⏳ Waiting for mysql_install_db...\n" && sleep 2
+		echo "⏳ Waiting for mysql_install_db...\n" && sleep 3
 	done
 	green "✅ The MariaDB data directory has been initialized\n"
 
@@ -31,7 +31,7 @@ else
 
 	until [ -n "$(mariadb -e 'SELECT @@datadir;' 2> /dev/null)" ]
 	do
-		echo "⏳ Waiting for the server to be ready to accept connections...\n" && sleep 2
+		echo "⏳ Waiting for the server to be ready to accept connections...\n" && sleep 3
 	done
 
 	# replaces the env variables by their values and run the SQL queries

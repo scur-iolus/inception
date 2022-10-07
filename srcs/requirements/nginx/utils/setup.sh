@@ -12,6 +12,7 @@ openssl req -newkey rsa:4096 -x509 -sha256 -days 90 -nodes \
 	-out /etc/ssl/nginx/$DOMAIN_NAME.pem -keyout /etc/ssl/nginx/$DOMAIN_NAME.key \
 	-subj "/C=FR/ST=Paris/L=Paris/O=42 Paris/OU=$ADMIN_NAME/CN=$DOMAIN_NAME" &> /dev/null
 
+echo "⏳ Waiting for openssl...\n" && sleep 2
 until [ -f "/etc/ssl/nginx/$DOMAIN_NAME.key" ];
 do
 	echo "⏳ Waiting for openssl...\n" && sleep 2
