@@ -4,6 +4,7 @@ services:
 
   db: # container that contains MariaDB only without nginx
     container_name: db
+    hostname: db
     restart: unless-stopped # restarts in case of a crash
     build:
       context: ./requirements/mariadb
@@ -20,12 +21,13 @@ services:
 
   wordpress: # container that contains WordPress + php-fpm
     container_name: wordpress
+    hostname: wordpress
     restart: unless-stopped # restarts in case of a crash
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
     volumes:
-      - wordpress_data:/var/www/html/wordpress
+      - wordpress_data:/var/www/html/
     environment:
       - MYSQL_HOST=${MYSQL_HOST:?MYSQL_HOST is not set}
       - MYSQL_DATABASE=${MYSQL_DATABASE:?MYSQL_DATABASE is not set}
@@ -40,6 +42,7 @@ services:
 
   nginx: # container that contains NGINX with TLSv1.2 or TLSv1.3 only
     container_name: nginx
+    hostname: nginx
     restart: unless-stopped # restarts in case of a crash
     build:
       context: ./requirements/nginx

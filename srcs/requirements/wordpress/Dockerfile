@@ -8,31 +8,46 @@ ARG DEBIAN_FRONTEND=teletype
 # PHP CURL: for some plugins
 # PHP GD: image operations
 # PHP INTL: internationalization support
-RUN apt-get -y update && \
-	apt-get -y install php-fpm php-mysql curl \
-	php-curl php-gd php-intl curl ed && \
+RUN apt-get -q -y update && \
+	apt-get -q -y install php-fpm php-mysql \
+	php-curl php-gd php-intl curl && \
 	rm -rf /var/lib/apt/lists/*
-
-RUN groupadd wordpress &&\
-	useradd --shell /bin/bash -g wordpress wordpress &&\
-	mkdir -p /var/www/html &&\
-	mkdir -p /run/php &&\
-	chown -R wordpress:wordpress /var/www/html &&\
-	chmod -R o-rwx /var/www/html
 
 # installing wp-cli https://wp-cli.org/
 RUN curl -s -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar &&\
 	php wp-cli.phar --info &&\
-	chmod +x wp-cli.phar &&\
-	mv wp-cli.phar /usr/local/bin/wp
+	mv wp-cli.phar /usr/local/bin/wp &&\
+	mkdir -p /run/php &&\
+	mkdir -p /var/www/html
 
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/
 
+COPY ./conf/setup.sh /var/www/html
+
+# creates a new user, owner of all useful files
+RUN groupadd wordpress &&\
+	useradd --shell /bin/bash -g wordpress wordpress &&\
+	chown -R wordpress:wordpress /run/php &&\
+	chown -R wordpress:wordpress /var/www/html &&\
+	chown wordpress:wordpress /usr/local/bin/wp &&\
+	chown -R wordpress:wordpress /etc/php/7.3/fpm/pool.d &&\
+	chown -R wordpress:wordpress /var/log/ &&\
+	mkdir -p /home/wordpress/.wp-cli &&\
+	chown wordpress:wordpress /home/wordpress/.wp-cli
+
+# updates files permissions
+RUN chmod o-rwx -R /run/php && \
+	chmod o-rwx -R /var/www/html &&\
+	chmod o-rwx -R /etc/php/7.3/fpm/pool.d/ &&\
+	chmod o-rwx -R /var/www/html && \
+	chmod o-rwx /usr/local/bin/wp &&\
+	chmod u+x /usr/local/bin/wp &&\
+	chmod u+r -R /etc/php/7.3/fpm/pool.d &&\
+	chmod u+x /var/www/html/setup.sh
+
 WORKDIR /var/www/html
 
-COPY ./conf/setup.sh .
-
-RUN chmod +x ./setup.sh
+USER wordpress
 
 EXPOSE 9000
 

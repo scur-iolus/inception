@@ -3,8 +3,8 @@ FROM debian:buster
 # to avoid debian harmless warnings
 ARG DEBIAN_FRONTEND=teletype
 
-RUN apt-get -y update &&\
-	apt-get install -y mariadb-server-10.3 &&\
+RUN apt-get -q -y update &&\
+	apt-get -q -y install mariadb-server-10.3 &&\
 	rm -rf /var/lib/apt/lists/* &&\
 	# makes MariaDB service directory
 	mkdir -p /var/run/mysqld &&\
