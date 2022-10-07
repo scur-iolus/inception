@@ -13,14 +13,20 @@ else
 	green "✅ Successfully downloaded the latest Wordpress version\n"
 	cd wordpress
 	mv wp-config-sample.php wp-config.php
-
-	echo "\n/* Lines automatically added by a custom script */" >> wp-config.php
-	wget --quiet https://api.wordpress.org/secret-key/1.1/salt/ >> wp-config.php
-	echo "define('DB_NAME', '$MYSQL_DATABASE');" >> wp-config.php
-	echo "define('DB_USER', '$MYSQL_USER');" >> wp-config.php
-	echo "define('DB_PASSWORD', '$MYSQL_PASSWORD');" >> wp-config.php
-	echo "define('DB_HOST', '$MYSQL_HOST');" >> wp-config.php
-	echo "define('FS_METHOD', 'direct');" >> wp-config.php
+	SALT=$(curl -s -L https://api.wordpress.org/secret-key/1.1/salt/)
+	STRING='put your unique phrase here'
+	# appends a newline to the end,
+	# g enables the "global" option (each instance of $STRING will be replaced)
+	# d tells the regex engine in ED to delete the entire line
+	# a tells ED to add whatever string that comes next to the file buffer at the current pointer
+	# . tells ED that no more text is coming
+	# w writes the contents of the buffer to disk
+	printf '%s\n' "g/$STRING/d" a "$SALT" . w | ed -s wp-config.php
+	wp config set DB_NAME "MYSQL_DATABASE" --allow-root
+	wp config set DB_USER "MYSQL_USER" --allow-root
+	wp config set DB_PASSWORD "MYSQL_PASSWORD" --allow-root
+	wp config set DB_HOST "MYSQL_HOST" --allow-root
+	wp config set FS_METHOD 'direct' --allow-root
 	green "✅ Successfully updated Wordpress config file\n"
 fi
 

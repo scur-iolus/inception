@@ -7,6 +7,8 @@ variables d'environnement à définir
 
 🔴 Tester makefile
 🔴 "Wordpress already here"
+🔴 make up un container seulement ?
+🔴 root vs non root
 
 
 
@@ -58,3 +60,5 @@ Install a LEMP stack
 https://stackoverflow.com/questions/21553353/what-is-the-difference-between-cmd-and-entrypoint-in-a-dockerfile
 
 https://mariadb.com/kb/en/mysqld-options/
+
+https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-with-http-2-support-on-ubuntu-18-04

@@ -1,6 +1,7 @@
 version: "3.9"
 
 services:
+
   db: # container that contains MariaDB only without nginx
     container_name: db
     restart: unless-stopped # restarts in case of a crash
@@ -16,6 +17,7 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:?MYSQL_PASSWORD is not set}
     networks:
       - docker-network
+
   wordpress: # container that contains WordPress + php-fpm
     container_name: wordpress
     restart: unless-stopped # restarts in case of a crash
@@ -35,6 +37,7 @@ services:
       - db
     networks:
       - docker-network
+
   nginx: # container that contains NGINX with TLSv1.2 or TLSv1.3 only
     container_name: nginx
     restart: unless-stopped # restarts in case of a crash
@@ -43,9 +46,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - 443:443
-      - 80:80 # FIXME
+      - 80:80
+    # FIXME
     volumes:
-      - wordpress_data:/var/www/html/wordpress
+      - wordpress_data:/var/www/html/
     depends_on:
       - wordpress
     links:

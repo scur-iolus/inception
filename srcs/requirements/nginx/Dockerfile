@@ -9,7 +9,7 @@ RUN apt-get -y update &&\
 	rm -rf /var/lib/apt/lists/*
 
 # customization of the nginx user and group ids in the image
-# we'll use 33 which is the user id and group id for www-data on Ubuntu & Debian
+# 33 is the user id and group id for www-data on Ubuntu & Debian by default
 ARG nginx_uid=33
 ARG nginx_gid=33
 
@@ -19,7 +19,7 @@ ARG nginx_gid=33
 # the -o switch allows reusing an existing user id
 RUN usermod -u $nginx_uid -o www-data && groupmod -g $nginx_gid -o www-data
 
-# adds the access rights to the files for nginx logs
+# adds the access rights to the files for nginx logs & Wordpress content
 RUN rm -rf /var/log/nginx &&\
 	mkdir /var/log/nginx &&\
 	touch /var/log/nginx/access.log &&\
@@ -29,7 +29,8 @@ RUN rm -rf /var/log/nginx &&\
 # Generate a self certificate # FIXME
 # RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out /etc/ssl/llalba.42.fr.pem -keyout /etc/ssl/llalba.42.fr.key -subj "/C=FR/ST=Paris/L=Paris/O=42 School/OU=llalba/CN=llalba.42.fr"
 
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+# the conf.d folder gathers files that are included at the end of nginx.conf
+COPY conf/nginx.conf /etc/nginx/conf.d
 
 EXPOSE 80
 # EXPOSE 443 # FIXME
