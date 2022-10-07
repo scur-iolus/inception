@@ -10,8 +10,8 @@ RUN apt-get -q -y update &&\
 
 # customization of the nginx user and group ids in the image
 # 33 is the user id and group id for www-data on Ubuntu & Debian by default
-ARG nginx_uid=33
-ARG nginx_gid=33
+ARG nginx_uid=1000
+ARG nginx_gid=1000
 
 # worker processes will run as the user nginx with group nginx
 # to this end, we'll override their respective uid and guid to something

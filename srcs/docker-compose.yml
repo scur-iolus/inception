@@ -33,6 +33,10 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE:?MYSQL_DATABASE is not set}
       - MYSQL_USER=${MYSQL_USER:?MYSQL_USER is not set}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:?MYSQL_PASSWORD is not set}
+      - DOMAIN_NAME=${DOMAIN_NAME:?DOMAIN_NAME is not set}
+      - ADMIN_NAME=${ADMIN_NAME:?ADMIN_NAME is not set}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:?ADMIN_EMAIL is not set}
+      - ADMIN_PWD=${ADMIN_PWD:?ADMIN_PWD is not set}
     depends_on:
       - db
     links:

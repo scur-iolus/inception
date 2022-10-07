@@ -9,7 +9,7 @@ then
 	green "⏩ $MYSQL_DATABASE database found, skipping initialization\n"
 else
 	# https://mariadb.com/kb/en/mysql_install_db/
-	mysql_install_db --auth-root-authentication-method=normal
+	mysql_install_db --auth-root-authentication-method=normal &> /dev/null
 
 	until [ -d "/var/lib/mysql/test" ]
 	do
@@ -27,7 +27,7 @@ else
 
 	# several ways here to manually starts MariaDB server
 	# see https://mariadb.com/kb/en/starting-and-stopping-mariadb-automatically/
-	/usr/share/mysql/mysql.server start
+	/usr/share/mysql/mysql.server start &> /dev/null
 
 	until [ -n "$(mariadb -e 'SELECT @@datadir;' 2> /dev/null)" ]
 	do
@@ -37,10 +37,11 @@ else
 	# replaces the env variables by their values and run the SQL queries
 	# not very clean but avoid installing envsubst and using eval
 	( echo "cat <<EOF" ; cat queries.sql ; echo EOF ) | sh | mysql -u root
+	echo ""
 	green "✅ Successfully ran the installation script\n"
 
 	# manually stops MariaDB server
-	/usr/share/mysql/mysql.server stop
+	/usr/share/mysql/mysql.server stop &> /dev/null
 fi
 
 # changes the bind-address to 'all' instead of 127.0.0.1 only (default on Debian)
