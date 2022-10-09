@@ -2,7 +2,6 @@ TODO
 🔴 root vs non root : lancer mariadb en non root
 It should not be possible to log in as root to the DB without any password
 
-
 To make things simpler, you have to configure your domain name so it points to your
 local IP address.
 This domain name must be login.42.fr. Again, you have to use your own login.
@@ -32,10 +31,6 @@ https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-l
 https://codex.wordpress.org/fr:Modifier_wp-config.php
 
 Install a LEMP stack
-
-
-
-
 
 https://stackoverflow.com/questions/21553353/what-is-the-difference-between-cmd-and-entrypoint-in-a-dockerfile
 
