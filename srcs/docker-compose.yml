@@ -39,6 +39,9 @@ services:
       - ADMIN_NAME=${ADMIN_NAME:?ADMIN_NAME is not set}
       - ADMIN_EMAIL=${ADMIN_EMAIL:?ADMIN_EMAIL is not set}
       - ADMIN_PWD=${ADMIN_PWD:?ADMIN_PWD is not set}
+      - OTHER_USER=${OTHER_USER:?OTHER_USER is not set}
+      - OTHER_EMAIL=${OTHER_EMAIL:?OTHER_EMAIL is not set}
+      - OTHER_PWD=${OTHER_PWD:?OTHER_PWD is not set}
     depends_on:
       - db
     networks:
@@ -81,3 +84,4 @@ volumes:
 
 networks:
   docker-network: # establishes the connection between the containers
+    name: docker-network

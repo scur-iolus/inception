@@ -24,6 +24,9 @@ else
 		fi
 		echo "⏳ Waiting for mariadb to be ready...\n" && sleep 3
 	done
+	wp user create "$OTHER_USER" "$OTHER_EMAIL" \
+		--role=contributor --user_pass="$OTHER_PWD" --quiet
+	green "✅ Successfully added another user\n"
 	# wp rewrite structure '/%postname%/' --hard
 	# wp rewrite flush --hard
 fi
