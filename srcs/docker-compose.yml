@@ -69,13 +69,13 @@ volumes:
   db_data: # volume that contains the WordPress database
     driver: local # default driver
     driver_opts:
-      device: "/home/moi/42/inception/srcs/test/db" # /home/$ADMIN_NAME/data/db FIXME
+      device: "/home/$ADMIN_NAME/data/db"
       type: none # default, no physical disk partition linked to the mound point
       o: bind # custom mount options
   wordpress_data: # 2d volume that contains the WordPress files
     driver: local
     driver_opts:
-      device: "/home/moi/42/inception/srcs/test/wordpress" # /home/$ADMIN_NAME/data/wordpress FIXME
+      device: "/home/$ADMIN_NAME/data/wordpress"
       type: none
       o: bind
 

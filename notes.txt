@@ -1,7 +1,4 @@
 TODO
-🔴 root vs non root : lancer mariadb en non root
-It should not be possible to log in as root to the DB without any password
-
 To make things simpler, you have to configure your domain name so it points to your
 local IP address.
 This domain name must be login.42.fr. Again, you have to use your own login.
