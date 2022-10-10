@@ -44,7 +44,4 @@ else
 	/usr/share/mysql/mysql.server stop &> /dev/null
 fi
 
-# changes the bind-address to 'all' instead of 127.0.0.1 only (default on Debian)
-# allowing the MariaDB server to listen on all IPv4 addresses
 green "🚀 Launching the MariaDB server...\n"
-mysqld --bind-address=0.0.0.0

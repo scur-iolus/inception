@@ -11,7 +11,8 @@ RUN apt-get -q -y update &&\
 	# gives mysql user permission to write to the service directory
 	chown -R mysql:mysql /var/run/mysqld &&\
 	# changes the permissions to rwx for all users
-	chmod 777 /var/run/mysqld
+	chmod 777 /var/run/mysqld &&\
+	chmod 777 /var/lib/mysqld
 
 # default port of both MySQL and MariaDB
 EXPOSE 3306/tcp
@@ -22,6 +23,14 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
 COPY ./utils/setup.sh .
 COPY ./utils/queries.sql .
 
-RUN chmod +r ./queries.sql && chmod +x ./setup.sh
+# update permissions
+RUN chmod a+r ./queries.sql &&\
+	chmod a+x ./setup.sh
 
 ENTRYPOINT [ "sh", "./setup.sh" ]
+
+USER mysql
+
+# changes the bind-address to 'all' instead of 127.0.0.1 only (default on Debian)
+# allowing the MariaDB server to listen on all IPv4 addresses
+CMD [ "mysqld", "--bind-address=0.0.0.0" ]
