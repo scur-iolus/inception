@@ -13,16 +13,19 @@
 green			= /bin/echo -e "\x1b[1m\x1b[32m$1\x1b[0m"
 ,				:= ,
 
-DOCKER_COMPOSE	= docker-compose
+DOCKER_COMPOSE	= docker compose
 COMPOSE_FILE	= ./srcs/docker-compose.yml
 
 all:			up # the 1st target is the default target: here 'up' isn't a command, it's a prerequisite
 
-up:				# Starts all or c=<name> containers in foreground
+prereq:			# makes the directories expected by Docker for the volumes
+				mkdir -p ~/data/db ~/data/wordpress
+
+up:				prereq # Starts all or c=<name> containers in foreground
 				@$(call green,"🚀 Builds$(,) creates and starts containers")
 				$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) up --build $(c)
 
-start:			# Starts all or c=<name> containers in background
+start:			prereq # Starts all or c=<name> containers in background
 				@$(call green,"🚀 Builds$(,) creates and starts containers in detached mode")
 				$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) up --build -d $(c)
 
