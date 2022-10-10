@@ -2,8 +2,6 @@ green() {
 	echo "\e[32m${1}\e[0m"
 }
 
-green "✅ Nginx has been successfully installed\n"
-
 # x509 -> generates a self certificate
 # subj -> replaces subject field of input request with specified data
 # nodes -> the newly created private key won't be encrypted
