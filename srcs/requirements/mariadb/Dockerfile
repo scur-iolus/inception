@@ -11,8 +11,7 @@ RUN apt-get -q -y update &&\
 	# gives mysql user permission to write to the service directory
 	chown -R mysql:mysql /var/run/mysqld &&\
 	# changes the permissions to rwx for all users
-	chmod 777 /var/run/mysqld &&\
-	chmod 777 /var/lib/mysqld
+	chmod 777 /var/run/mysqld
 
 # default port of both MySQL and MariaDB
 EXPOSE 3306/tcp
