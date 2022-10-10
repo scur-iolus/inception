@@ -6,16 +6,16 @@ green() {
 
 if [ -d "/var/lib/mysql/$MYSQL_DATABASE" ]
 then
-	green "⏩ $MYSQL_DATABASE database found, skipping initialization\n"
+	green "⏩ $MYSQL_DATABASE database found, skipping initialization"
 else
 	# https://mariadb.com/kb/en/mysql_install_db/
 	mysql_install_db --auth-root-authentication-method=normal &> /dev/null
 
 	until [ -d "/var/lib/mysql/test" ]
 	do
-		echo "⏳ Waiting for mysql_install_db...\n" && sleep 3
+		echo "⏳ Waiting for mysql_install_db..." && sleep 3
 	done
-	green "✅ The MariaDB data directory has been initialized\n"
+	green "✅ The MariaDB data directory has been initialized"
 
 	# we could run mysql_secure_installation script with a heredoc to answer its questions
 	# but we'll manually improve the security of the MariaDB installation
@@ -29,22 +29,17 @@ else
 	# see https://mariadb.com/kb/en/starting-and-stopping-mariadb-automatically/
 	/usr/share/mysql/mysql.server start &> /dev/null
 
-	until [ -n "$(mariadb -e 'SELECT @@datadir;' 2> /dev/null)" ]
+	until [ -n "$(mysql -u root -e 'SELECT @@datadir;' 2> /dev/null)" ]
 	do
-		echo "⏳ Waiting for the server to be ready to accept connections...\n" && sleep 3
+		echo "⏳ Waiting for the server to be ready to accept connections..." && sleep 3
 	done
 
 	# replaces the env variables by their values and run the SQL queries
 	# not very clean but avoid installing envsubst and using eval
 	( echo "cat <<EOF" ; cat queries.sql ; echo EOF ) | sh | mysql -u root
 	echo ""
-	green "✅ Successfully ran the installation script\n"
+	green "✅ Successfully ran the installation script"
 
 	# manually stops MariaDB server
 	/usr/share/mysql/mysql.server stop &> /dev/null
 fi
-
-# changes the bind-address to 'all' instead of 127.0.0.1 only (default on Debian)
-# allowing the MariaDB server to listen on all IPv4 addresses
-green "🚀 Launching the MariaDB server...\n"
-mysqld --bind-address=0.0.0.0

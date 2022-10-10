@@ -10,13 +10,13 @@ services:
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
+      args:
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD is not set}
+        - MYSQL_DATABASE=${MYSQL_DATABASE:?MYSQL_DATABASE is not set}
+        - MYSQL_USER=${MYSQL_USER:?MYSQL_USER is not set}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD:?MYSQL_PASSWORD is not set}
     volumes:
       - db_data:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD is not set}
-      - MYSQL_DATABASE=${MYSQL_DATABASE:?MYSQL_DATABASE is not set}
-      - MYSQL_USER=${MYSQL_USER:?MYSQL_USER is not set}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD:?MYSQL_PASSWORD is not set}
     networks:
       - docker-network
 
