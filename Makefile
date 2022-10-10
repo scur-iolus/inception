@@ -59,6 +59,7 @@ clean:			# Cleans COMPOSE_FILE related data
 fclean:			# Cleans all data, including all images used by any service, volumes, containers
 				@$(call green,"🧹 Stops and removes any containers$(,) networks$(,) volumes and images")
 				$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) down --rmi all --volumes --remove-orphans
+				sudo rm -rf ~/data
 
 # runs the recipes regardless of whethere there are files with those names
 # those commands do not represent physical files and are always out-of-date targets
