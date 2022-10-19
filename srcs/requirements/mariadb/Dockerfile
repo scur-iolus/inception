@@ -17,9 +17,6 @@ RUN apt-get -q -y update &&\
 # default port of both MySQL and MariaDB
 EXPOSE 3306/tcp
 
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-	CMD mariadb -e 'SELECT @@datadir;' || exit 1
-
 COPY ./utils/setup.sh .
 COPY ./utils/queries.sql .
 
